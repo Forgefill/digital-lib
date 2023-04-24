@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { Box, Button, TextField, Typography, Link } from '@mui/material';
-import loginUser from '../../httpRequests/api';
+import {  Button, TextField } from '@mui/material';
+import {loginUser, LoginCredentials} from '../../httpRequests/api';
+import { useNavigate, Link } from 'react-router-dom';
 
-type LoginFormProps = {
-    setIsLogin: (isLogin: boolean) => void;
-  };
-
-const LoginForm = ({ setIsLogin }: LoginFormProps) => {
+const SignIn = () => {
+  const navigate = useNavigate();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const credentials: LoginCredentials = {
+    Email: Email,
+    Password: Password,
+  };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -25,10 +27,9 @@ const LoginForm = ({ setIsLogin }: LoginFormProps) => {
     setIsLoading(true);
     setError('');
     try {
-      const token = await loginUser({ Email, Password });
+      const token = await loginUser(credentials);
       localStorage.setItem('token', token);
-      setIsLogin(true);
-      // Redirect to dashboard or home page
+      navigate("/");
     } catch (error : any) {
       setError(error.message || 'Failed to login');
     } finally {
@@ -37,21 +38,21 @@ const LoginForm = ({ setIsLogin }: LoginFormProps) => {
   };
 
   return (
-    <Box sx={{ 
+    <div style={{ 
         display: 'flex', 
         width:'max-content',
         flexDirection: 'column',
         alignItems: 'center',
-        borderRadius: 8, 
+        borderRadius: 40, 
         border:'1px solid grey',
         background: '#dedede',
         textAlign:'center',
-        p:2
+        padding:25
         }}>
-      <Box sx={{ width: '100%', maxWidth: 400 }}>
-      <Typography variant="h5" sx={{ mb: 3 }}>
+      <div style={{ width: '100%', maxWidth: 400 }}>
+      <label style={{ marginBottom: 3, fontSize: 22 }}>
         Sign In
-      </Typography>
+      </label>
         <form onSubmit={handleSubmit}>
           <TextField
             id="email"
@@ -75,20 +76,22 @@ const LoginForm = ({ setIsLogin }: LoginFormProps) => {
             value={Password}
             onChange={handlePasswordChange}
           />
-          {error && <Typography variant="body2" sx={{ color: 'red' }}>{error}</Typography>}
+          <div>
+          {error && <label  style={{ color: 'red' }}>{error}</label>}
+          </div>
           <Button type="submit" variant="contained" disabled={isLoading} sx={{ mt: 2 }}>
           Sign In
           </Button>
         </form>
-      </Box>
-      <Link href="#" variant="body2" marginTop={1}>
-            Forgot your password?
+      </div>
+      <Link to="/auth" style={{marginTop:10}}>
+        Forgot your password?
       </Link>
-      <Link href="#" variant="body2" marginTop={1}>
-            Create a new account
+      <Link to="/auth/signUp" style={{marginTop:10}}>
+        Create a new account
       </Link>
-    </Box>
+    </div>
   );
 };
 
-export default LoginForm;
+export default SignIn;
