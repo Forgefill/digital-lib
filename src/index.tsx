@@ -6,16 +6,31 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import AuthorizationPage from './Pages/AuthorizationPage/AuthorizationPage';
+import AuthPage from './Pages/AuthPage/AuthPage';
+import ErrorPage from './Pages/ErrorPage/ErrorPage';
+import SignIn from './Components/SignIn/SignIn';
+import SignUp from './Components/SignUp/SignUp';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage/>,
+    errorElement: <ErrorPage/>
   },
   {
-    path:"/register",
-    element: <AuthorizationPage/>
+    path:"/auth",
+    element: <AuthPage/>,
+    
+    children: [
+      {
+        path: "signIn",
+        element: <SignIn/>,
+      },
+      {
+        path:"signUp",
+        element:<SignUp/>,
+      }
+    ],
   }
 ]);
 

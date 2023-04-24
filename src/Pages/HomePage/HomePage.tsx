@@ -1,26 +1,19 @@
 import { useState } from 'react';
-import './HomePage.css';
+import './homePage.css';
+import '../page.css'
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
 
 
 
-function App() {
-  const [isLogin, setIsLogin] = useState(localStorage.getItem("token") != null);
-
+function HomePage() {
   return (
-    <div className="Home" style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {isLogin ? (
-        <div>
-        </div>
-      ) : (
-        <div>
+    <div className="page " >
           <Navbar/>
+          {localStorage.getItem('token') ? <h1>Authorize</h1> : null}
           <Footer/>
-        </div>
-      )}
     </div>
   );
 }
 
-export default App;
+export default HomePage;
