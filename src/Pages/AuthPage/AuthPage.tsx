@@ -6,9 +6,9 @@ import "../page.css"
 
 function AuthPage(){
     return (
-    <div className='page'>
+    <div className='page auth-container'>
         <Routes>
-                <Route path="/" element={<Navigate to="/auth/signIn" replace />} />
+                <Route path="/" element={<Navigate to="/auth/login" replace />} />
         </Routes>
         <Outlet/>
     </div>

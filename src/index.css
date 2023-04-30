@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root{
+  --primaryColor: #404258;
+  --secondaryColor: #474E68;
+  --tertiaryColor: #50577A;
+  --quaternaryColor: #6B728E;
+  --accentColor: #A1A7B3;
+  --backgroundColor: #E0E2EB;
+  --textColor: #8F93A2;
+}
+
+@import '@fortawesome/fontawesome-free/css/all.css';

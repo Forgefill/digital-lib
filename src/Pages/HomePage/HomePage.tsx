@@ -1,16 +1,21 @@
 import { useState } from 'react';
-import './homePage.css';
+import './HomePage.css';
 import '../page.css'
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '../../Components/Footer/Footer';
-
+import BookGrid from '../../Components/BookList/BookGrid';
 
 
 function HomePage() {
   return (
-    <div className="page " >
+    <div className="page" >
           <Navbar/>
-          {localStorage.getItem('token') ? <h1>Authorize</h1> : null}
+          <div className = "container">
+            <BookGrid name="New Ongoing Release"/>
+            <BookGrid name="New Ongoing Release"/>
+            <BookGrid name="New Ongoing Release"/>
+            <BookGrid name="New Ongoing Release"/>
+          </div>
           <Footer/>
     </div>
   );

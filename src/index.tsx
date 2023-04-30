@@ -8,8 +8,9 @@ import {
 } from "react-router-dom";
 import AuthPage from './Pages/AuthPage/AuthPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
-import SignIn from './Components/SignIn/SignIn';
-import SignUp from './Components/SignUp/SignUp';
+import SearchPage from './Pages/SearchPage/SearchPage';
+import LoginForm from './Components/LoginForm/LoginForm';
+import RegisterForm from './Components/RegisterForm/RegisterForm';
 
 const router = createBrowserRouter([
   {
@@ -23,14 +24,18 @@ const router = createBrowserRouter([
     
     children: [
       {
-        path: "signIn",
-        element: <SignIn/>,
+        path: "login",
+        element: <LoginForm/>,
       },
       {
-        path:"signUp",
-        element:<SignUp/>,
+        path:"register",
+        element:<RegisterForm/>,
       }
     ],
+  },
+  {
+    path:"/search",
+    element:<SearchPage/>
   }
 ]);
 

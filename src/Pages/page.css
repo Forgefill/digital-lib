@@ -1,14 +1,21 @@
 .page {
-    background-size: cover;
-    background-image: url(./Page-background.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
   height: 100%;
   width: 100%;
   min-height: 100vh;
-  min-width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 80%;
+  width: 80%;
+  height: max-content;
+  margin: 0 auto;
+  padding: 30px;
 }

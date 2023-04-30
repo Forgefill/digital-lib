@@ -2,8 +2,10 @@ import './Footer.css'
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <p>© 2023 Created by Mykhailo Bubka.</p>
+    <footer className="my-footer">
+      <div >
+        <p>This is my footer content.</p>
+      </div>
     </footer>
   );
 };
