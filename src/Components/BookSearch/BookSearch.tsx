@@ -25,11 +25,10 @@ function BookSearch() {
         <div className="control column is-one-fifth">
           <button
             type="submit"
-            className={`button is-info is-rounded is-grey-lighter is-fullwidth is-size-5 ${
+            className={`button is-info is-success is-rounded is-fullwidth is-size-5 ${
               isLoading ? "is-loading" : ""
             }`}
             disabled={isLoading}
-            style={{ backgroundColor: "lightgrey" }}
           >
             <i className="fas fa-search"></i>
           </button>
@@ -37,7 +36,7 @@ function BookSearch() {
         <div className="control column">
           <input
             id="title"
-            className="input is-rounded is-grey-lighter is-size-5"
+            className="input is-rounded is-success is-size-5"
             type="text"
             placeholder="Search book by title"
             value={title}

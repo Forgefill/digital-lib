@@ -20,7 +20,7 @@ const BookCard: React.FC<BookCardProps> = ({ bookInfo }) => {
       )}
       <div className="card-content has-text-centered">
         <div className="is-clipped block" style={{ maxHeight: 100 }}>
-          <p className="title is-6">{bookInfo.title}, this is book title</p>
+          <p className="title is-6">{bookInfo.title}</p>
         </div>
         <p className="subtitle is-size-6">
           Average Score: {bookInfo.averageScore}
@@ -31,10 +31,10 @@ const BookCard: React.FC<BookCardProps> = ({ bookInfo }) => {
           <span>
             <i className="fas fa-eye"></i>
           </span>
-          &nbsp;12mln
+          &nbsp;{bookInfo.views}
         </p>
         <p className="card-footer-item">
-          333k&nbsp;
+          {bookInfo.bookmarks}&nbsp;
           <span>
             <i className="fa-solid fa-bookmark"></i>
           </span>

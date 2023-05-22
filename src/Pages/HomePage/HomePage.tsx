@@ -7,10 +7,10 @@ function HomePage() {
   return (
     <div className="page">
       <Navbar />
-      <BookGrid name="New Ongoing Release" />
-      <BookGrid name="New Ongoing Release" />
-      <BookGrid name="New Ongoing Release" />
-      <BookGrid name="New Ongoing Release" />
+      <div className="box">
+        <BookGrid name="New Ongoing Release" />
+      </div>
+
       <Footer />
     </div>
   );

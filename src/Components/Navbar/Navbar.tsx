@@ -1,4 +1,3 @@
-import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "bulma/css/bulma.min.css";
@@ -24,6 +23,13 @@ function Navbar() {
     navigate("/search");
   };
 
+  const handleBrowseClick = () => {
+    navigate("/browse");
+  };
+
+  const handleWriteClick = () => {
+    navigate("/write");
+  };
   return (
     <nav
       className="navbar is-top has-shadow"
@@ -53,7 +59,10 @@ function Navbar() {
           </div>
 
           <div className="navbar-item">
-            <button className="navbar-item button is-white">
+            <button
+              className="navbar-item button is-white"
+              onClick={handleBrowseClick}
+            >
               <span className="icon is-small">
                 <i className="fas fa-folder-open"></i>
               </span>
@@ -62,20 +71,14 @@ function Navbar() {
           </div>
 
           <div className="navbar-item">
-            <button className="navbar-item button is-white">
+            <button
+              className="navbar-item button is-white"
+              onClick={handleWriteClick}
+            >
               <span className="icon is-small">
-                <i className="fas fa-chart-line"></i>
+                <i className="fas fa-solid fa-pen-to-square"></i>
               </span>
-              <span>Ranking</span>
-            </button>
-          </div>
-
-          <div className="navbar-item">
-            <button className="navbar-item button is-white">
-              <span className="icon is-small">
-                <i className="fas fa-filter"></i>
-              </span>
-              <span>Filter</span>
+              <span>Write</span>
             </button>
           </div>
         </div>

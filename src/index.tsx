@@ -9,6 +9,7 @@ import SearchPage from "./Pages/SearchPage/SearchPage";
 import LoginForm from "./Components/LoginForm/LoginForm";
 import RegisterForm from "./Components/RegisterForm/RegisterForm";
 import BookPage from "./Pages/BookPage/BookPage";
+import BrowsePage from "./Pages/BrowsePage/BrowsePage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/book",
     element: <BookPage />,
+  },
+  {
+    path: "/browse",
+    element: <BrowsePage />,
   },
 ]);
 

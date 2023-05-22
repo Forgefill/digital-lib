@@ -13,13 +13,18 @@ code {
 }
 
 :root{
-  --primaryColor: #404258;
-  --secondaryColor: #474E68;
-  --tertiaryColor: #50577A;
-  --quaternaryColor: #6B728E;
-  --accentColor: #A1A7B3;
-  --backgroundColor: #E0E2EB;
-  --textColor: #8F93A2;
+    --bg-color-secondary: rgba(58,124,69,.1);
+    --bg-color-secondary-2: #4e8958;
+    --bg-color-secondary-3: rgba(58,124,69,.4);
+    --bg-color-secondary-4: #75a37d;
+    --text-color-secondary: #3a7c45;
+    --text-color-secondary-2: #ebf2ec;
+    --anchor-color: #3a7c45;
+    --button-bg: #44834e;
+    --button-secondary: #4e8958;
+    --button-secondary-border: #61966a;
+    --avatar-lvl-7: #75a37d;
+    --avatar-lvl-8: #61966a;
 }
 
 @import '@fortawesome/fontawesome-free/css/all.css';

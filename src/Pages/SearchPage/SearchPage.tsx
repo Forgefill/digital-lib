@@ -12,8 +12,12 @@ export function SearchPage() {
         <div className="block" style={{ width: "100%" }}>
           <BookSearch />
         </div>
+      </div>
+
+      <div className="box">
         <BookGrid name="Result" />
       </div>
+      <Footer />
     </div>
   );
 }

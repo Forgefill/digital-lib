@@ -1,16 +1,18 @@
-import {apiBaseURL} from "./apiSettings"
+import { apiBaseURL } from "./apiSettings";
 
 export interface BookInfoListResponse {
-    data?: BookInfoModel[];
-    errors?: string[];
+  data?: BookInfoModel[];
+  errors?: string[];
 }
 
-export interface BookInfoModel  {
-    id: number;
-    title: string;
-    averageScore: number;
-    imageUrl?: string;
-};
+export interface BookInfoModel {
+  id: number;
+  title: string;
+  views: number;
+  bookmarks: number;
+  averageScore: number;
+  imageUrl?: string;
+}
 
 export async function fetchBookInfoList(): Promise<BookInfoListResponse> {
   try {
@@ -19,14 +21,14 @@ export async function fetchBookInfoList(): Promise<BookInfoListResponse> {
 
     return bookInfoListResponse;
   } catch (error) {
-    console.error('Failed to fetch book info list:', error);
+    console.error("Failed to fetch book info list:", error);
     return {};
   }
 }
 
-export interface BookImageResponse{
-    data?: BookImage;
-    errors?: string[];
+export interface BookImageResponse {
+  data?: BookImage;
+  errors?: string[];
 }
 
 export interface BookImage {
@@ -36,14 +38,16 @@ export interface BookImage {
   imageData: Uint8Array;
 }
 
-export async function fetchBookImage(bookId: number): Promise<BookImageResponse> {
+export async function fetchBookImage(
+  bookId: number
+): Promise<BookImageResponse> {
   try {
     const response = await fetch(`${apiBaseURL}/Book/Image/${bookId}`);
 
     const bookImageResponse = await response.json();
     return bookImageResponse;
   } catch (error) {
-    console.log('Failed to fetch image for book:', error, " id: ", bookId);
+    console.log("Failed to fetch image for book:", error, " id: ", bookId);
     return {};
   }
 }
