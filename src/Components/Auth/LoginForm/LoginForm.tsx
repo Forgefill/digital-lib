@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { loginUser, LoginCredentials } from '../../httpRequests/authApi';
+import { loginUser, LoginCredentials } from '../../../httpRequests/authApi';
 import { useNavigate, Link } from 'react-router-dom';
 import 'bulma/css/bulma.min.css';
 
@@ -77,7 +77,7 @@ const LoginForm = () => {
       </div>
       <div className="has-text-centered">
         <div className='block'>
-          <Link to="/auth">Forgot your password?</Link>
+          <Link to="/auth/forgotPassword">Forgot your password?</Link>
         </div>
         <div className='block'>
           <Link to="/auth/register">Create a new account</Link>

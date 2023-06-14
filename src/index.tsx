@@ -6,10 +6,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthPage from "./Pages/AuthPage/AuthPage";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 import SearchPage from "./Pages/SearchPage/SearchPage";
-import LoginForm from "./Components/LoginForm/LoginForm";
-import RegisterForm from "./Components/RegisterForm/RegisterForm";
+import LoginForm from "./Components/Auth/LoginForm/LoginForm";
+import RegisterForm from "./Components/Auth/RegisterForm/RegisterForm";
 import BookPage from "./Pages/BookPage/BookPage";
 import BrowsePage from "./Pages/BrowsePage/BrowsePage";
+import ForgotPasswordForm from "./Components/Auth/PasswordRestore/ForgotPasswordForm";
+import RecoverPasswordForm from "./Components/Auth/PasswordRestore/RestorePasswordForm";
+import ChapterPage from "./Pages/ChapterPage/ChapterPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,14 @@ const router = createBrowserRouter([
         path: "register",
         element: <RegisterForm />,
       },
+      {
+        path: "forgotPassword",
+        element: <ForgotPasswordForm/>
+      },
+      {
+        path: "recoverPassword",
+        element: <RecoverPasswordForm/>
+      }
     ],
   },
   {
@@ -44,6 +55,10 @@ const router = createBrowserRouter([
     path: "/browse",
     element: <BrowsePage />,
   },
+  {
+    path:"/chapter",
+    element: <ChapterPage/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(

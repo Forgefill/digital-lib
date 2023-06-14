@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import {  Button, TextField } from '@mui/material';
-import { registerUser, RegisterCredentials } from '../../httpRequests/authApi';
+import { registerUser, RegisterCredentials } from '../../../httpRequests/authApi';
 import {  useNavigate, Link } from 'react-router-dom';
 import 'bulma/css/bulma.min.css';
 

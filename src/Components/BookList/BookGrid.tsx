@@ -96,7 +96,7 @@ const BookGrid = ({ name }: BookGridProps) => {
       {books.length > 0 ? (
         <div className="columns is-multiline">
           {books.map((book) => (
-            <div className="column is-3" key={book.id}>
+            <div className="column is-3" key={book.id} >
               <BookCard bookInfo={book} />
             </div>
           ))}
