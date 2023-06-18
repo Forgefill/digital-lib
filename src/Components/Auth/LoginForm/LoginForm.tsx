@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { loginUser, LoginCredentials } from '../../../httpRequests/authApi';
 import { useNavigate, Link } from 'react-router-dom';
 import 'bulma/css/bulma.min.css';
+import AuthContext from '../../../Context/AuthContext';
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const authData = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +25,7 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    authData?.login();
     event.preventDefault();
     setIsLoading(true);
     setError('');

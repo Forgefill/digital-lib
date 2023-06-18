@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BookInfoModel } from "../../../httpRequests/bookApi";
 import noImagePlaceholder from "./No-Image-Placeholder.png";
 import "bulma/css/bulma.min.css";
@@ -7,25 +8,27 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ bookInfo }) => {
+
+
   return (
     <div className="card">
-      {bookInfo.imageUrl ? (
-        <figure className="image is-3by4">
-          <img src={bookInfo.imageUrl} alt={bookInfo.title} />
+      <Link to='/book'>
+        <figure className="image is-3by4" >
+          <img 
+            src={bookInfo.imageUrl || noImagePlaceholder} 
+            alt={bookInfo.imageUrl ? bookInfo.title : "No Image"} 
+          />
         </figure>
-      ) : (
-        <figure className="image is-3by4">
-          <img src={noImagePlaceholder} alt="No Image" />
-        </figure>
-      )}
-      <div className="card-content has-text-centered">
-        <div className="is-clipped block" style={{ maxHeight: 100 }}>
-          <p className="title is-6">{bookInfo.title}</p>
+
+        <div className="card-content has-text-centered">
+          <div className="is-clipped block" style={{ maxHeight: 100 }}>
+            <p className="title is-6">{bookInfo.title}</p>
+          </div>
+          <p className="subtitle is-size-6">
+            Average Score: {bookInfo.averageScore}
+          </p>
         </div>
-        <p className="subtitle is-size-6">
-          Average Score: {bookInfo.averageScore}
-        </p>
-      </div>
+      </Link>
       <footer className="card-footer">
         <p className="card-footer-item">
           <span>

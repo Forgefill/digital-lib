@@ -13,6 +13,13 @@ import BrowsePage from "./Pages/BrowsePage/BrowsePage";
 import ForgotPasswordForm from "./Components/Auth/PasswordRestore/ForgotPasswordForm";
 import RecoverPasswordForm from "./Components/Auth/PasswordRestore/RestorePasswordForm";
 import ChapterPage from "./Pages/ChapterPage/ChapterPage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import ProfileInfo from "./Pages/ProfilePage/ProfileInfo";
+import ProfileLibrary from "./Pages/ProfilePage/ProfileLibrary";
+import ProfileComments from "./Pages/ProfilePage/ProfileComments";
+import ProfileReviews from "./Pages/ProfilePage/ProfileReviews";
+import { AuthProvider } from "./Context/AuthContext";
+import WritePage from "./Pages/WritePage/WritePage";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +65,32 @@ const router = createBrowserRouter([
   {
     path:"/chapter",
     element: <ChapterPage/>
+  },
+  {
+    path:"/write",
+    element: <WritePage/>
+  },
+  {
+    path:"/profile",
+    element: <ProfilePage/>,
+    children: [
+      {
+        path: "info",
+        element: <ProfileInfo />,
+      },
+      {
+        path: "library",
+        element: <ProfileLibrary />,
+      },
+      {
+        path: "comments",
+        element: <ProfileComments/>
+      },
+      {
+        path: "reviews",
+        element: <ProfileReviews/>
+      }
+    ],
   }
 ]);
 
@@ -67,6 +100,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

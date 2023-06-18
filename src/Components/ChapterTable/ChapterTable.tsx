@@ -1,33 +1,55 @@
-export function ChapterTable() {
-  const chapters = [
-    { id: 1, name: "Chapter 231: Chapter name" },
-    { id: 2, name: "Chapter 232: Chapter name" },
-    { id: 3, name: "Chapter 233: Chapter name" },
-    { id: 4, name: "Chapter 234: Chapter name" },
-    { id: 5, name: "Chapter 235: Chapter name" },
-    // Add more chapters as needed
-  ];
+import React from 'react';
+import SeparateLine from '../SeparateLine/SeparateLine';
+
+interface Chapter {
+  id: number;
+  name: string;
+}
+
+interface ChapterTableProps {
+  chapters: Chapter[];
+  currentPage: number;
+  totalPages: number;
+  chaptersPerPage: number;
+  onPageChange: (pageNum: number) => void;
+  onChaptersPerPageChange: (chaptersPerPage: number) => void;
+}
+
+const ChapterTable: React.FC<ChapterTableProps> = ({
+  chapters,
+  currentPage,
+  totalPages,
+  chaptersPerPage,
+  onPageChange,
+  onChaptersPerPageChange,
+}) => {
+
+  // Generate an array of page numbers for the pagination
+  let pageNumbers = [1];
+  for (let i = currentPage - 3; i <= currentPage + 3; i++) {
+    if (i > 1 && i < totalPages) {
+      pageNumbers.push(i);
+    }
+  }
+  pageNumbers.push(totalPages);
+
+  // Remove duplicates and sort the array
+  pageNumbers = Array.from(new Set(pageNumbers)).sort((a, b) => a - b);
 
   return (
     <div className="box">
       <div className="columns">
-        <i className="column is-narrow fas fa-light fa-book"></i>
-        <span className="column is-narrow title is-5 m-0">
-          Table of content
-        </span>
+        <div className='column is-narrow'>
+          <i className=" fas fa-light fa-book"></i>
+        </div>
+        <span className="column is-narrow title is-5 m-0">Table of content</span>
         <span className="column is-flex is-justify-content-end">
-          430 chapters
+          {totalPages} pages
         </span>
       </div>
-      <hr className="m-0"></hr>
+      <SeparateLine/>
 
       <div className="mt-4">
-        <input
-          className="input is-small mb-4"
-          type="text"
-          placeholder="Search chapters"
-        />
-
         <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
           <thead>
             <tr>
@@ -50,57 +72,53 @@ export function ChapterTable() {
           role="navigation"
           aria-label="pagination"
         >
-          <a className="pagination-previous">Previous</a>
-          <a className="pagination-next">Next</a>
+          <a
+            className="pagination-previous"
+            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+          >
+            Previous
+          </a>
+          <a
+            className="pagination-next"
+            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+          >
+            Next
+          </a>
           <ul className="pagination-list">
-            <li>
-              <a className="pagination-link" aria-label="Goto page 1">
-                1
-              </a>
-            </li>
-            <li>
-              <span className="pagination-ellipsis">&hellip;</span>
-            </li>
-            <li>
-              <a className="pagination-link" aria-label="Goto page 45">
-                45
-              </a>
-            </li>
-            <li>
-              <a
-                className="pagination-link is-current"
-                aria-label="Page 46"
-                aria-current="page"
-              >
-                46
-              </a>
-            </li>
-            <li>
-              <a className="pagination-link" aria-label="Goto page 47">
-                47
-              </a>
-            </li>
-            <li>
-              <span className="pagination-ellipsis">&hellip;</span>
-            </li>
-            <li>
-              <a className="pagination-link" aria-label="Goto page 86">
-                86
-              </a>
-            </li>
+            {pageNumbers.map((page, index) => (
+              <React.Fragment key={page}>
+                {index > 0 && pageNumbers[index - 1] < page - 1 && (
+                  <li>
+                    <span className="pagination-ellipsis">&hellip;</span>
+                  </li>
+                )}
+                <li>
+                  <a
+                    className={`pagination-link ${currentPage === page ? 'is-current' : ''}`}
+                    aria-label={`Goto page ${page}`}
+                    onClick={() => onPageChange(page)}
+                  >
+                    {page}
+                  </a>
+                </li>
+              </React.Fragment>
+            ))}
           </ul>
         </nav>
 
         <div className="select is-small mt-4">
-          <select>
-            <option>5 chapters per page</option>
-            <option>10 chapters per page</option>
-            <option>20 chapters per page</option>
+          <select
+            value={chaptersPerPage}
+            onChange={(e) => onChaptersPerPageChange(Number(e.target.value))}
+          >
+            <option value={5}>5 chapters per page</option>
+            <option value={10}>10 chapters per page</option>
+            <option value={20}>20 chapters per page</option>
           </select>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default ChapterTable;

@@ -3,8 +3,14 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import BookSearch from "../../Components/BookSearch/BookSearch";
 import BookGrid from "../../Components/BookList/BookGrid";
+import { testBooks } from "../../httpRequests/bookApi";
+import SeparateLine from "../../Components/SeparateLine/SeparateLine";
+import {useState} from 'react'
 
 export function BrowsePage() {
+  
+  const [isSearched, setIsSearched] = useState(false);
+
   const genres = [
     { id: 1, name: "Horror" },
     { id: 2, name: "Adventure" },
@@ -12,6 +18,10 @@ export function BrowsePage() {
   ];
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     console.log(e.target.value);
+  };
+
+  const handleSearchClick = ()=> {
+    setIsSearched(true);
   };
 
   const handleStatusChange = (
@@ -160,11 +170,14 @@ export function BrowsePage() {
             <button
               className="button is-success is-medium"
               style={{ minWidth: "50%" }}
+              onClick={handleSearchClick}
             >
               Search
             </button>
           </div>
-          <BookGrid name="Result" />
+          <SeparateLine/>
+          {isSearched && 
+          <BookGrid name="Result" books={testBooks} />}
         </div>
       </div>
 

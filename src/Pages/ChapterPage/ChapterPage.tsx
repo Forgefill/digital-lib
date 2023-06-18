@@ -2,16 +2,18 @@ import "../page.css";
 import {useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
-import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import './quill.css'
 import SeparateLine from "../../Components/SeparateLine/SeparateLine";
+import QuillTextView from "../../Components/QuillTextView/QuillTextView";
+import { Link, useNavigate } from "react-router-dom";
 
  function ChapterPage() {
+    const navigate = useNavigate();
+    
 
     const [IsShowSetting, setIsShowSetting] = useState<boolean>(false);
-    const [BookName, setBookName] = useState<String>('Book name and Link');
-    const loremIpsumWithMarkup = `
+    const BookName:string = 'Book name and Link';
+    const loremIpsumWithMarkup:string = `
     <h1>Lorem Ipsum</h1>
     <p><strong>Lorem ipsum</strong> dolor sit amet, consectetur adipiscing elit. Sed <em>tempor</em> metus id dolor tristique, in laoreet ligula pharetra. Fusce tristique diam at est vestibulum, id vestibulum odio aliquam. Nam ac sagittis arcu, vitae pretium justo. Duis rhoncus lectus id ligula tincidunt aliquet. Nunc tincidunt <u>gravida</u> tristique. Morbi vitae feugiat mi. Nullam tincidunt, velit ut placerat aliquet, nunc massa vulputate felis, eu dignissim neque tellus nec sapien. Sed ac malesuada urna. Donec dignissim facilisis lacinia.</p>
   
@@ -49,20 +51,28 @@ import SeparateLine from "../../Components/SeparateLine/SeparateLine";
     <p>This text is <mark>highlighted</mark>.</p>
   `;
   
-    const [editorContent, setEditorContent] = useState(loremIpsumWithMarkup);
-    const [selectedStyleButton, setSelectedStyleButton] = useState('Default');
+    const [selectedStyle, setSelectedStyle] = useState('Default');
 
-    const handleFontStyleButtonClick = (buttonName:string) => {
-        setSelectedStyleButton(buttonName);
+    const handleFontStyleButtonClick = (selectedStyle:string) => {
+        setSelectedStyle(selectedStyle);
     };
 
-    const handleEditorChange = (content: string) => {
-      setEditorContent(content);
-    };
+
 
     const handleSettingClick = () => {
         IsShowSetting ? setIsShowSetting(false): setIsShowSetting(true);
     }
+    
+    const [fontSize, setFontSize] = useState(16);
+    const increaseFontSize = () => {
+        setFontSize(prevFontSize => prevFontSize + 2);
+      };
+    
+      const decreaseFontSize = () => {
+        setFontSize(prevFontSize => prevFontSize > 2 ? prevFontSize - 2 : 2);
+      };
+
+      const styles: string[] = ['Default', 'Dyslexic', 'Roboto', 'Lora'];
 
   return (
     <div className="page">
@@ -70,7 +80,8 @@ import SeparateLine from "../../Components/SeparateLine/SeparateLine";
         <div className="box" style={{minWidth: '80%', maxWidth:'80%', minHeight:'80%'}}>
             <div className="columns block ">
                 <div className="column">
-                    <p className="title">{BookName}</p>
+                    <Link to='/book'><p className="title has-text-success">{BookName}</p></Link>
+                    
                     <p className="subtitle">Chapter Name</p>
                 </div>
                 <div className="column is-narrow is-right">
@@ -91,12 +102,12 @@ import SeparateLine from "../../Components/SeparateLine/SeparateLine";
                             Font size
                         </span>
                         <div className="buttons is-centered mt-3">
-                            <button className="button">
+                            <button className="button" onClick={decreaseFontSize}>
                                 <span className="icon">
                                     <i className={`fas fa-heading fa-minus`}></i>
                                 </span>
                             </button>
-                            <button className="button">
+                            <button className="button" onClick={increaseFontSize}>
                                 <span className="icon">
                                     <i className={`fas fa-heading fa-plus`}></i>
                                 </span>
@@ -108,38 +119,15 @@ import SeparateLine from "../../Components/SeparateLine/SeparateLine";
                             Font style
                         </span>
                         <div className="buttons is-centered mt-3">
-                            <button 
-                                className={`button is-small is-rounded ${selectedStyleButton == 'Default' ? 'is-primary' : ''}`}
-                                onClick={() => handleFontStyleButtonClick('Default')}
-                            >
-                                <span>
-                                    Default
-                                </span>
-                            </button>
-                            <button 
-                                className={`button is-small is-rounded ${selectedStyleButton == 'Dyslexic' ? 'is-primary' : ''}`}
-                                onClick={() => handleFontStyleButtonClick('Dyslexic')}
-                            >
-                                <span>
-                                    Dyslexic
-                                </span>
-                            </button>
-                            <button 
-                                className={`button is-small is-rounded ${selectedStyleButton == 'Roboto' ? 'is-primary' : ''}`}
-                                onClick={() => handleFontStyleButtonClick('Roboto')}
-                            >
-                                <span>
-                                    Roboto
-                                </span>
-                            </button>
-                            <button 
-                                className={`button is-small is-rounded ${selectedStyleButton == 'Lora' ? 'is-primary' : ''}`}
-                                onClick={() => handleFontStyleButtonClick('Lora')}
-                            >
-                                <span>
-                                    Lora
-                                </span>
-                            </button>
+                            {styles.map((style) => (
+                                <button 
+                                    className={`button is-small is-rounded ${selectedStyle == style ? 'is-primary' : ''}`}
+                                    onClick={() => handleFontStyleButtonClick(style)}>
+                                    <span>
+                                        {style}
+                                    </span>
+                                </button>))
+                            }
                         </div>
                     </div>
                 </div>
@@ -148,22 +136,12 @@ import SeparateLine from "../../Components/SeparateLine/SeparateLine";
                 
             )}
             
-            
             <SeparateLine/>
-            <div>
-                <ReactQuill
-                modules={{ toolbar: false }}
-                value={editorContent}
-                readOnly={true}
-                onChange={handleEditorChange}
-                className="quill-editor"
-                style={{fontSize:'20px'}}
-                />
-            </div>
+                <QuillTextView initialContent={loremIpsumWithMarkup} fontSize={fontSize} fontFamily={selectedStyle} isBordered = {false}/>
             <SeparateLine/>
 
             <div className="section buttons is-centered">
-                    <button className="button is-link" style={{minWidth:'10%'}}>
+                    <button className="button is-link" style={{minWidth:'10%'}} onClick={()=>{alert('previous chapter')}}>
                         <span>
                             <i className=" fas fa-arrow-left mr-2"></i>
                         </span>
@@ -171,7 +149,7 @@ import SeparateLine from "../../Components/SeparateLine/SeparateLine";
                             Previous
                         </span>
                     </button>
-                    <button className="button is-link" style={{minWidth:'10%'}}>
+                    <button className="button is-link" style={{minWidth:'10%'}} onClick={()=>{navigate('/book')}}>
                         <span>
                             <i className=" fas fa-home mr-1"></i>
                         </span>
@@ -179,7 +157,7 @@ import SeparateLine from "../../Components/SeparateLine/SeparateLine";
                             Index
                         </span>
                     </button>
-                    <button className="button is-link" style={{minWidth:'10%'}}>
+                    <button className="button is-link" style={{minWidth:'10%'}} onClick={()=>{alert('next chapter')}}>
                         <span>
                             Next
                         </span>

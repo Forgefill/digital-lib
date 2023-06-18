@@ -1,0 +1,18 @@
+#ql-review-form .ql-editor {
+    min-height: 200px;
+    font-size: 16px;
+}
+
+input[type="radio"] {
+    display: none;
+  }
+  
+  .star {
+    color: gray;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  input[type="radio"]:checked ~ .star {
+    color: gold;
+  }
