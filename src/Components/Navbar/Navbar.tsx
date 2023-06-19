@@ -35,6 +35,11 @@ function Navbar() {
   const handleWriteClick = () => {
     navigate("/write");
   };
+
+  const handleAdminClick = () => {
+    navigate("/admin/users");
+  };
+
   return (
     <nav
       className="mb-1 navbar is-top has-shadow"
@@ -86,6 +91,18 @@ function Navbar() {
               <span>Write</span>
             </button>
           </div>
+
+{authData?.isAdmin && (<div className="navbar-item">
+            <button
+              className="button is-danger is-outlined"
+              onClick={handleAdminClick}
+            >
+              <span className="icon is-small">
+                <i className="fas fa-solid fa-gear"></i>
+              </span>
+              <span>Admin</span>
+            </button>
+          </div>)}
         </div>
 
         <div className="navbar-end" style={{marginRight:'10%'}}>

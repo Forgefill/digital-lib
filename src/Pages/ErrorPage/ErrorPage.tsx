@@ -1,4 +1,4 @@
-import { useRouteError  } from "react-router-dom";
+import { Link, useRouteError  } from "react-router-dom";
 import "../page.css";
 
  function ErrorPage() {
@@ -6,12 +6,15 @@ import "../page.css";
   console.error(error);
 
   return (
-    <div className="page" id="error-page" style={{color:'white'}}>
+    <div className="page" id="error-page" style={{height:'100vh'}}>
       <h1 >Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p>
         <i>{error.statusText || error.message}</i>
       </p>
+      <Link to='/'>
+        <span>Home</span>
+      </Link>
     </div>
   );
 }

@@ -31,7 +31,7 @@ function ProfileInfo(){
                                         <div className="column is-one-quarter">
                                             <span className="title is-6">Email</span>
                                         </div>
-                                        <div className="column is-one-quarter">
+                                        <div className="column is-narrow">
                                             <span className="subtitle is-6">{authData?.email}</span>
                                         </div>
                                 </div>

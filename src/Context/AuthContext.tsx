@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, {  useState } from "react";
+import { User, users } from "../httpRequests/testData";
 
 interface AuthContextProps {
     username?: string,
@@ -8,7 +9,8 @@ interface AuthContextProps {
     rank?: string,
     about?: string,
     isAuthenticated: boolean,
-    login: ()=>void,
+    isAdmin?: boolean,
+    login: (email: string, password:string )=>void,
     logout: ()=>void
 }
 
@@ -19,22 +21,34 @@ type Props = {
 const AuthContext = React.createContext<AuthContextProps | undefined> (undefined)
 
 export const AuthProvider = ( { children}:Props ) => {
-    const [username, setUsername] = useState<string|undefined>('Forgefill');
-    const [email, setEmail] = useState<string|undefined>('example@gmail.com');
-    const [token, setToken] = useState<string| undefined>('token');
-    const [dateReg, setDateRegister] = useState<string|undefined>('21 April 2023, 04:55')
-    const [rank, setRank] = useState<string|undefined>('Reader');
-    const [about, setAbout] = useState<string|undefined>('i am just a reader');
+    const [username, setUsername] = useState<string|undefined>();
+    const [email, setEmail] = useState<string|undefined>();
+    const [token, setToken] = useState<string| undefined>();
+    const [dateReg, setDateRegister] = useState<string|undefined>()
+    const [rank, setRank] = useState<string|undefined>();
+    const [about, setAbout] = useState<string|undefined>();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAdmin, setIsAdmin] = useState<boolean|undefined>();
 
-    const login = () => {
-        setUsername('Forgefill');
-        setEmail('example@gmail.com');
-        setToken('token');
-        setDateRegister('21 April 2023, 04:55');
-        setRank('Reader');
-        setAbout('i am just a reader');
-        setIsAuthenticated(true);
+    const login = (email: string, password:string ) => {
+      let userId:number = users.findIndex(x=>x.email == email && x.password == password);
+
+      if(userId == -1){
+        return;
+      }
+      else{
+        let user:User = users[userId];
+      setUsername(user.username);
+      setEmail(user.email);
+      setToken('token');
+      setDateRegister(user.registered);
+      setAbout(user.about);
+      setIsAuthenticated(true);
+      if(user.role == 'admin'){
+        setIsAdmin(true);
+      }
+      setRank(user.role);
+      }
     };
   
     const logout = () => {
@@ -45,11 +59,12 @@ export const AuthProvider = ( { children}:Props ) => {
       setRank(undefined);
       setAbout(undefined);
       setIsAuthenticated(false);
+      setIsAdmin(undefined);
     };
 
   
     return (
-      <AuthContext.Provider value={{ isAuthenticated,username, email, token, dateReg, rank, about,  login, logout }}>
+      <AuthContext.Provider value={{ isAuthenticated,username, email, token, dateReg, rank, about, isAdmin,  login, logout }}>
         {children}
       </AuthContext.Provider>
     );

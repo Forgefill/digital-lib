@@ -20,6 +20,13 @@ import ProfileComments from "./Pages/ProfilePage/ProfileComments";
 import ProfileReviews from "./Pages/ProfilePage/ProfileReviews";
 import { AuthProvider } from "./Context/AuthContext";
 import WritePage from "./Pages/WritePage/WritePage";
+import CreateBookPage from "./Pages/WritePage/CreateBookPage";
+import AdminPage from "./Pages/AdminPage/AdminPage";
+import AdminUsers from "./Pages/AdminPage/AdminUsers";
+import AdminBooks from "./Pages/AdminPage/AdminBooks";
+import AdminComments from "./Pages/AdminPage/AdminComments";
+import AdminReviews from "./Pages/AdminPage/AdminReviews";
+import AdminGenres from "./Pages/AdminPage/AdminGenres";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +62,7 @@ const router = createBrowserRouter([
     element: <SearchPage />,
   },
   {
-    path: "/book",
+    path: "/book/:id",
     element: <BookPage />,
   },
   {
@@ -63,12 +70,42 @@ const router = createBrowserRouter([
     element: <BrowsePage />,
   },
   {
-    path:"/chapter",
+    path:"/book/:bId/chapter/:cId",
     element: <ChapterPage/>
   },
   {
     path:"/write",
     element: <WritePage/>
+  },
+  {
+    path:'/write/book',
+    element: <CreateBookPage/>
+  },
+  {
+    path:'/admin',
+    element:<AdminPage/>,
+    children: [
+      {
+        path: "users",
+        element: <AdminUsers />,
+      },
+      {
+        path: "books",
+        element: <AdminBooks />,
+      },
+      {
+        path: "genres",
+        element: <AdminGenres />,
+      },
+      {
+        path: "comments",
+        element: <AdminComments/>
+      },
+      {
+        path: "reviews",
+        element: <AdminReviews/>
+      }
+    ],
   },
   {
     path:"/profile",

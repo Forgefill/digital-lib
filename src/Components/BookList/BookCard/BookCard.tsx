@@ -12,7 +12,7 @@ const BookCard: React.FC<BookCardProps> = ({ bookInfo }) => {
 
   return (
     <div className="card">
-      <Link to='/book'>
+      <Link to={`/book/${bookInfo.id}`}>
         <figure className="image is-3by4" >
           <img 
             src={bookInfo.imageUrl || noImagePlaceholder} 

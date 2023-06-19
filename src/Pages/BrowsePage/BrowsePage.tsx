@@ -1,9 +1,8 @@
 import "../page.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
-import BookSearch from "../../Components/BookSearch/BookSearch";
 import BookGrid from "../../Components/BookList/BookGrid";
-import { testBooks } from "../../httpRequests/bookApi";
+import { genres, books } from "../../httpRequests/testData";
 import SeparateLine from "../../Components/SeparateLine/SeparateLine";
 import {useState} from 'react'
 
@@ -11,11 +10,7 @@ export function BrowsePage() {
   
   const [isSearched, setIsSearched] = useState(false);
 
-  const genres = [
-    { id: 1, name: "Horror" },
-    { id: 2, name: "Adventure" },
-    { id: 3, name: "English" },
-  ];
+
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     console.log(e.target.value);
   };
@@ -56,7 +51,7 @@ export function BrowsePage() {
               </div>
               <div className="field">
                 <div className="control column is-narrow">
-                  <div className="select is-success is-small">
+                  <div className="select is-primary is-small">
                     <select onChange={handleGenreSelectLogicChange}>
                       <option value="And">And</option>
                       <option value="Or">Or</option>
@@ -75,7 +70,7 @@ export function BrowsePage() {
                 </label>
               </div>
               {genres.map((genre) => (
-                <div key={genre.id} className="column is-one-fifth p-2">
+                <div key={genre.id} className="column  is-one-fifth p-2">
                   <label className="checkbox">
                     <input type="checkbox" />
                     <span className="ml-2">{genre.name}</span>
@@ -92,7 +87,7 @@ export function BrowsePage() {
               </div>
               <div className="field">
                 <div className="control column is-narrow">
-                  <div className="select is-success is-small">
+                  <div className="select is-primary is-small">
                     <select onChange={handleRatingLogicChange}>
                       <option value="Min">Min</option>
                       <option value="Max">Max</option>
@@ -105,7 +100,7 @@ export function BrowsePage() {
 
             <div className="field">
               <div className="control">
-                <div className="select is-success">
+                <div className="select is-primary">
                   <select
                     onChange={handleRatingSelectChange}
                     style={{ minWidth: "20rem" }}
@@ -128,7 +123,7 @@ export function BrowsePage() {
 
             <div className="field">
               <div className="control">
-                <div className="select is-success">
+                <div className="select is-primary">
                   <select
                     onChange={handleSortChange}
                     style={{ minWidth: "20rem" }}
@@ -152,7 +147,7 @@ export function BrowsePage() {
 
             <div className="field">
               <div className="control">
-                <div className="select is-success">
+                <div className="select is-primary">
                   <select
                     onChange={handleStatusChange}
                     style={{ minWidth: "20rem" }}
@@ -168,7 +163,7 @@ export function BrowsePage() {
 
           <div className="block has-text-centered">
             <button
-              className="button is-success is-medium"
+              className="button is-primary is-medium"
               style={{ minWidth: "50%" }}
               onClick={handleSearchClick}
             >
@@ -177,7 +172,7 @@ export function BrowsePage() {
           </div>
           <SeparateLine/>
           {isSearched && 
-          <BookGrid name="Result" books={testBooks} />}
+          <BookGrid name="Result" books={books} />}
         </div>
       </div>
 

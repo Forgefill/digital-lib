@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import ReactQuill from "react-quill";
 import "./ReviewForm.css";
 import { DeltaStatic, Sources } from 'quill';
+import QuillEditor from '../QuillEditor/QuillEditor';
 
 
 const ReviewForm = () =>{
 
     const [charCount, setCharCount] = useState(0);
     const charLimit:number = 500;
-    const errorStyle = { color: 'red' }; // Style for the error message
-
+    const errorStyle = { color: 'red' };
     
 
     const handleQuillChange = (value: string, delta: DeltaStatic, source: Sources, editor: ReactQuill.UnprivilegedEditor) => {
         const text = editor.getText();
-        const characters = text.trim().length;  // Get character count
+        const characters = text.trim().length;
         setCharCount(characters);
     }
 
@@ -45,11 +45,7 @@ const ReviewForm = () =>{
             </div>
 
             <div className="block">
-                <ReactQuill
-                    id='ql-review-form' 
-                    onChange={handleQuillChange}
-                    placeholder="Write your review here"
-                />
+                <QuillEditor/>
                 <p>Character count: {charCount} / {charLimit}</p>
                 {charCount > charLimit && <p style={errorStyle}>Your review exceeds the maximum character limit.</p>}
             </div>

@@ -1,14 +1,35 @@
 import { Link } from "react-router-dom";
 import { BookInfoModel } from "../../httpRequests/bookApi";
 import noImagePlaceholder from './BookCard/No-Image-Placeholder.png'
+import { chapters, comments, reviews } from "../../httpRequests/testData";
 
   interface BookListProps {
     name: string;
     books: BookInfoModel[];
+    type: string;
   }
   
-  const BookList = ({ name, books }: BookListProps) => {
-    books.sort((a, b) => b.views - a.views);
+  const BookList = ({ name, books, type }: BookListProps) => {
+    if(type == 'views'){
+      books.sort((a, b) => b.views - a.views);
+    }
+    else if(type == 'comments'){
+      books.sort((a, b) => {
+        const commentCountA = chapters
+                                .filter(x => x.bookId === a.id)
+                                .reduce((count, x) => count + (x.comments?.length || 0), 0);
+        const commentCountB = chapters
+                                .filter(x => x.bookId === b.id)
+                                .reduce((count, x) => count + (x.comments?.length || 0), 0);
+
+        return commentCountB - commentCountA;
+      });
+    }
+    else if(type == 'reviews'){
+      books.sort((a, b) => {
+         return reviews.filter(x=>x.bookId == b.id).length - reviews.filter(x=>x.bookId == a.id).length;
+      });
+    }
     return (
       <div>
         <div className="tile" style={{background:'#00d1b2', maxWidth:'70%'}}>
@@ -19,7 +40,7 @@ import noImagePlaceholder from './BookCard/No-Image-Placeholder.png'
             {books.map((book) => (
             <div className="columns p-0 mt-2 mb-0"  key={book.id} >
                 <div className="column is-narrow p-0 m-2">
-                    <Link to="/book">    
+                    <Link to={`/book/${book.id}`}>    
                         <figure className="image is-128x128 ml-1" style={{overflow: 'hidden', width: '63px', height: '84px'}}>
                             <img
                             src={book.imageUrl || noImagePlaceholder} 
@@ -30,18 +51,55 @@ import noImagePlaceholder from './BookCard/No-Image-Placeholder.png'
                 </div>
                 <div className="column is-narrow p-0 mt-2">
                     <div>
-                        <Link to="/book">
+                        <Link to={`/book/${book.id}`}>
                             <span className="title is-6">{book.title}</span>
                         </Link>
                     </div>
-                    <div className="is-flex mt-1 is-align-items-center">
-                        <i className="fas fa-bookmark mr-1 is-size-6"></i>
-                        <span className="subtitle is-size-6 pb-1">{book.bookmarks}</span>
-                    </div>
-                    <div className="is-flex mt-1 is-align-items-center">
-                        <i className="fas fa-eye mr-1 is-size-7"></i>
-                        <span className="subtitle is-size-6 pb-1">{book.views}</span>
-                    </div>
+                    {type == 'views' && 
+                    <div>
+                      <div className="is-flex mt-1 is-align-items-center">
+                          <i className="fas fa-bookmark mr-1 is-size-6"></i>
+                          <span className="subtitle is-size-6 pb-1">{book.bookmarks}</span>
+                      </div>
+                      <div className="is-flex mt-1 is-align-items-center">
+                          <i className="fas fa-eye mr-1 is-size-7"></i>
+                          <span className="subtitle is-size-6 pb-1">{book.views}</span>
+                      </div>
+                    </div>}
+                    {type == 'comments' && 
+                    <div>
+                      <div className="is-flex mt-1 is-align-items-center">
+                          <i className="fas fa-comment-dots mr-1 is-size-6"></i>
+                          <span className="subtitle is-size-6 pb-1">
+                          {
+                            (() => {
+                              const commentCount = chapters
+                                .filter(x => x.bookId === book.id)
+                                .reduce((count, x) => count + (x.comments?.length || 0), 0);
+
+                              return commentCount > 0 ? `${commentCount} comments` : 'No comments';
+                            })()
+                          }
+                          
+                          </span>
+                      </div>
+                      <div className="is-flex mt-1 is-align-items-center">
+                          <i className="fas fa-check mr-1 is-size-6"></i>
+                          <span className="subtitle is-size-6 pb-1">{reviews.filter(x=>x.bookId == book.id).length} reviews</span>
+                      </div>
+                    </div>}
+                    {type == 'reviews' && 
+                    <div>
+                      <div className="is-flex mt-1 is-align-items-center">
+                          <i className="fas fa-star mr-1 is-size-7" style={{color:'orange'}}></i>
+                          <span className="subtitle is-size-6 pb-1">{book.averageScore}</span>
+                      </div>
+                      <div className="is-flex mt-1 is-align-items-center">
+                          <i className="fas fa-pen mr-1 is-size-7"></i>
+                          <span className="subtitle is-size-6 pb-1">{reviews.filter(x=>x.bookId == book.id).length} reviews</span>
+                      </div>
+                    </div>}
+                    
                 </div>
             </div>
 

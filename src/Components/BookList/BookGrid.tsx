@@ -22,7 +22,7 @@ const BookGrid = ({ name, viewMoreLink, books }: BookGridProps) => {
       </div>
       <SeparateLine/>
 
-      {books.length > 0 ? (
+      {books.length >= 0 ? (
         <div className="columns is-multiline">
           {books.map((book) => (
             <div className="column " key={book.id} >

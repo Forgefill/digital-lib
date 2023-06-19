@@ -1,16 +1,14 @@
 import React from 'react';
 import SeparateLine from '../SeparateLine/SeparateLine';
+import { Chapter } from '../../httpRequests/testData';
 
-interface Chapter {
-  id: number;
-  name: string;
-}
 
 interface ChapterTableProps {
   chapters: Chapter[];
   currentPage: number;
   totalPages: number;
   chaptersPerPage: number;
+  bookId: number;
   onPageChange: (pageNum: number) => void;
   onChaptersPerPageChange: (chaptersPerPage: number) => void;
 }
@@ -20,6 +18,7 @@ const ChapterTable: React.FC<ChapterTableProps> = ({
   currentPage,
   totalPages,
   chaptersPerPage,
+  bookId,
   onPageChange,
   onChaptersPerPageChange,
 }) => {
@@ -60,7 +59,7 @@ const ChapterTable: React.FC<ChapterTableProps> = ({
             {chapters.map((chapter) => (
               <tr key={chapter.id}>
                 <td>
-                  <a href={`/chapter/${chapter.id}`}>{chapter.name}</a>
+                  <a href={`/book/${bookId}/chapter/${chapter.id}`}>{chapter.title}</a>
                 </td>
               </tr>
             ))}

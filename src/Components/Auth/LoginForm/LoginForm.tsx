@@ -25,20 +25,14 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    authData?.login();
     event.preventDefault();
     setIsLoading(true);
     setError('');
 
-    const result = await loginUser(credentials);
-
-    if (result.data) {
-      localStorage.setItem('token', result.data.token);
-      navigate('/');
-    } else if (result.errors) {
-      setError(result.errors.join('\n'));
-    }
+    authData?.login(email, password);
+    navigate('/');
     setIsLoading(false);
+    
   };
 
   return (

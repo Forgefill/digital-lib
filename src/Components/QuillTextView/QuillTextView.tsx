@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 interface QuillTextViewProps {
-    initialContent: string;
+    initialContent?: string;
     fontSize: number;
     fontFamily: string;
     isBordered: boolean;
@@ -34,6 +34,8 @@ const QuillTextView: React.FC<QuillTextViewProps> = ({ initialContent, fontSize,
             </style>
             <div className="quill-text-view">
                 <ReactQuill
+                id = "quill-text-view"
+                className="quill-text-view"
                     modules={{ toolbar: false }}
                     value={content}
                     readOnly={true}
