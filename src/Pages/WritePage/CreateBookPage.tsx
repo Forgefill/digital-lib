@@ -79,7 +79,6 @@ function CreateBookPage(){
                 userId: 
                 user?.id , 
                 isCompleted: 'Ongoing',
-                averageScore: 0,
                 createdDate: dateNow,
                 imageUrl: photoUrl 
             }

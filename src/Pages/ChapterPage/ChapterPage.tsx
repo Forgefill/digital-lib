@@ -23,20 +23,7 @@ import { books, chapters } from "../../httpRequests/testData";
     
 
 
-    let sortedChapters = chapters.filter(x=>x.bookId == bookId).sort((a, b) => b.chapterNumber - a.chapterNumber).reverse()
-    let sortedIdOfChapter = sortedChapters.findIndex(x=>x.id == chapterId)
-    let prevSortedId = sortedIdOfChapter - 1
-    let nextSortedId = sortedIdOfChapter + 1
-    let prevId : number|undefined;
-    let nextId: number|undefined;
-    if(prevSortedId != -1)
-    {
-        prevId = sortedChapters[prevSortedId].id;
-    }
-    if(nextSortedId != sortedChapters.length)
-    {
-        nextId = sortedChapters[nextSortedId].id;
-    }
+    let sortedChapters = chapters.filter(x => x.bookId == bookId).sort((a, b) => a.chapterNumber - b.chapterNumber);
 
     const [IsShowSetting, setIsShowSetting] = useState<boolean>(false);
     const [selectedStyle, setSelectedStyle] = useState('Default');
@@ -63,7 +50,7 @@ import { books, chapters } from "../../httpRequests/testData";
   return (
     <div className="page">
         <Navbar/>
-        <div className="box" style={{minWidth: '80%', maxWidth:'80%', minHeight:'80vh'}}>
+        <div className="box mt-2" style={{minWidth: '80%', maxWidth:'80%', minHeight:'80vh'}}>
             <div className="columns block ">
                 <div className="column">
                     <Link to={`/book/${bookId}`}><p className="title has-text-success">{book?.title}</p></Link>
@@ -132,9 +119,9 @@ import { books, chapters } from "../../httpRequests/testData";
 
             <div className="section buttons is-centered">
                     <button
-                    disabled = {prevId == undefined} 
+                    disabled = {chapter?.id == chapters[0].id} 
                     className="button is-link" style={{minWidth:'10%'}} 
-                    onClick={()=>{navigate(`/book/${bookId}/chapter/${prevId}`)}}>
+                    onClick={()=>{navigate(`/book/${bookId}/chapter/${chapterId - 1}`)}}>
                         <span>
                             <i className=" fas fa-arrow-left mr-2"></i>
                         </span>
@@ -151,9 +138,9 @@ import { books, chapters } from "../../httpRequests/testData";
                         </span>
                     </button>
                     <button 
-                    disabled = {nextId == undefined} 
+                    disabled = {chapter?.id == chapters[chapters.length - 1].id} 
                     className="button is-link" style={{minWidth:'10%'}} 
-                    onClick={()=>{navigate(`/book/${bookId}/chapter/${nextId}`)}}>
+                    onClick={()=>{navigate(`/book/${bookId}/chapter/${chapterId + 1}`)}}>
                         <span>
                             Next
                         </span>

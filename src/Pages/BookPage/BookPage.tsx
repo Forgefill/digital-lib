@@ -5,15 +5,17 @@ import NoImagePlaceholder from "../../Components/BookList/BookCard/No-Image-Plac
 import BookGrid from "../../Components/BookList/BookGrid";
 import AverageScore from "../../Components/AverageScore/AverageSCore";
 import ChapterTable from "../../Components/ChapterTable/ChapterTable";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ReviewForm from "../../Components/ReviewForm/ReviewForm";
 import QuillTextView from "../../Components/QuillTextView/QuillTextView";
 import { chapters, books, users } from "../../httpRequests/testData";
 import { useNavigate, useParams } from 'react-router-dom';
 import { reviews } from "../../httpRequests/testData";
+import AuthContext from "../../Context/AuthContext";
 
 
 export function BookPage() {
+
   let { id} = useParams();
   const navigate = useNavigate()
   let bookId = -1;
@@ -28,8 +30,18 @@ export function BookPage() {
   const [chaptersData, setChapters] = useState(chapters.filter(x=>x.bookId == book?.id))
   const [currentPage, setCurrentPage] = useState(1);
   const [chaptersPerPage, setChaptersPerPage] = useState(5);
-  const [reviewData, setReviewData] = useState(reviews);
+  const [reviewData, setReviewData] = useState(reviews.filter(x=>x.bookId == bookId));
+  const sum = reviewData.reduce((total, review) => total + review.score, 0);
+  let averageScore = 0
+  if(reviewData.length > 0 ){
+    averageScore = sum / reviewData.length;
+  }
+
+
+  const authData = useContext(AuthContext);
+  const user = users.find(x=>x.email == authData?.email);
   
+
   const totalPages = Math.ceil(chaptersData.length / chaptersPerPage);
 
   const onPageChange = (pageNum: number) => {
@@ -71,7 +83,7 @@ export function BookPage() {
                 <h2 className="subtitle is-size-4">by {author?.username}</h2>
               </div>
 
-              {book?.averageScore && <AverageScore score={book?.averageScore} />}
+              {reviews.length > 0 && <AverageScore score={averageScore} />}
 
               <div className="columns is-multiline is-left">
                 <div className="column is-flex is-align-items-center">
@@ -133,9 +145,15 @@ export function BookPage() {
                 <button className="column button is-primary is-medium mr-2">
                   Read
                 </button>
-                <button className="column button is-primary is-medium ml-2">
+                {user && user.bookmarked.some(x=>x == bookId) ? 
+                <button className="column button is-warning is-medium ml-2" disabled= {true}>
+                Bookmarked
+                </button>
+                : 
+                <button className="column button is-primary is-medium ml-2" disabled= {authData?.email == undefined}>
                   Bookmark
                 </button>
+                }
               </div>
             </div>
           </div>
@@ -179,7 +197,7 @@ export function BookPage() {
             ))}
         </div>
       </div>
-      <div className="box">
+      <div className="box" style={{ width: "80%", background:'whitesmoke' }}>
         <BookGrid name="Popular books" books={books} />
       </div>
       <Footer />

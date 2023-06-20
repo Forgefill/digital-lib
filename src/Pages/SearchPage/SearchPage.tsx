@@ -56,7 +56,7 @@ export function SearchPage() {
         </div>
       </div>
 
-      <div className="box has-text-centered" style={{minHeight:'65vh', minWidth:'100vh'}}>
+      <div className="box has-text-centered" style={{minHeight:'65vh', minWidth:'150vh'}}>
         {isSearched && bookData ? <BookGrid name="Result" books={bookData}/> : <span className="title"></span>}
       </div>
       <Footer />

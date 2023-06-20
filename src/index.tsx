@@ -27,6 +27,7 @@ import AdminBooks from "./Pages/AdminPage/AdminBooks";
 import AdminComments from "./Pages/AdminPage/AdminComments";
 import AdminReviews from "./Pages/AdminPage/AdminReviews";
 import AdminGenres from "./Pages/AdminPage/AdminGenres";
+import EditBookPage from "./Pages/WritePage/EditBookPage";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
   {
     path:"/write",
     element: <WritePage/>
+  },
+  {
+    path:"/write/editBook/:id",
+    element: <EditBookPage/>
   },
   {
     path:'/write/book',

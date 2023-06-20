@@ -1,15 +1,13 @@
-import {
-  BookInfoModel
-} from "../../httpRequests/bookApi";
 import BookCard from "./BookCard/BookCard";
 import "bulma/css/bulma.min.css";
 import { Link } from "react-router-dom";
 import SeparateLine from "../SeparateLine/SeparateLine";
+import { Book } from "../../httpRequests/testData";
 
 interface BookGridProps {
   name: string;
   viewMoreLink?: string;
-  books: BookInfoModel[];
+  books: Book[];
 }
 
 const BookGrid = ({ name, viewMoreLink, books }: BookGridProps) => {
@@ -25,7 +23,7 @@ const BookGrid = ({ name, viewMoreLink, books }: BookGridProps) => {
       {books.length >= 0 ? (
         <div className="columns is-multiline">
           {books.map((book) => (
-            <div className="column " key={book.id} >
+            <div className="column is-one-fifth" key={book.id} >
               <BookCard bookInfo={book} />
             </div>
           ))}

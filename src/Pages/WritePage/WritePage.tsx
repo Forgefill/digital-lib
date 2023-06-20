@@ -2,7 +2,7 @@ import Footer from "../../Components/Footer/Footer";
 import Navbar from "../../Components/Navbar/Navbar";
 import {useContext, useState} from 'react';
 import AuthContext from "../../Context/AuthContext";
-import {Link, Navigate} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 import SeparateLine from "../../Components/SeparateLine/SeparateLine";
 import { books, chapters, deleteBook, reviews, users } from "../../httpRequests/testData";
 import noImagePlaceholder from '../../Components/BookList/BookCard/No-Image-Placeholder.png'
@@ -13,7 +13,7 @@ function WritePage(){
     let user = users.find(x=>x.email == authData?.email);
     const [booksData, setBooksData] = useState(books.filter(x=>x.userId == user?.id))
     let chaptersData = chapters.filter(x=>booksData.some(y=>y.id == x.bookId))
-
+    const navigate = useNavigate()
     let bookmarks = 0;
     booksData.forEach(x=> bookmarks += x.bookmarks)
 
@@ -127,7 +127,10 @@ function WritePage(){
                                                     onClick={()=>handleDeleteBookChange(book.id)}>
                                                     <i className="fas fa-trash"/>
                                                 </button>
-                                                <button className="button is-primary is-outlined is-small "style={{borderRadius:'10px'}}>
+                                                <button 
+                                                className="button is-primary is-outlined is-small"
+                                                style={{borderRadius:'10px'}}
+                                                onClick={()=>{navigate(`/write/editBook/${book.id}`)}}>
                                                     <i className="fas fa-pen-to-square"/>
                                                 </button>
                                             </div>

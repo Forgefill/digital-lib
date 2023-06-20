@@ -1,15 +1,20 @@
 import { Link } from "react-router-dom";
 import { BookInfoModel } from "../../httpRequests/bookApi";
 import noImagePlaceholder from './BookCard/No-Image-Placeholder.png'
-import { chapters, comments, reviews } from "../../httpRequests/testData";
+import { Book, chapters, comments, reviews } from "../../httpRequests/testData";
+import { useState } from "react";
 
   interface BookListProps {
     name: string;
-    books: BookInfoModel[];
+    books: Book[];
     type: string;
   }
   
   const BookList = ({ name, books, type }: BookListProps) => {
+
+    
+  
+    
     if(type == 'views'){
       books.sort((a, b) => b.views - a.views);
     }
@@ -30,14 +35,16 @@ import { chapters, comments, reviews } from "../../httpRequests/testData";
          return reviews.filter(x=>x.bookId == b.id).length - reviews.filter(x=>x.bookId == a.id).length;
       });
     }
+
+    let toShowBooks = books.slice(0, 5)
     return (
       <div>
         <div className="tile" style={{background:'#00d1b2', maxWidth:'70%'}}>
             <span className="title" style={{color:'white'}}>{name}</span>
         </div>
-        {books.length > 0 ? (
+        {toShowBooks.length > 0 ? (
           <div >
-            {books.map((book) => (
+            {toShowBooks.map((book) => (
             <div className="columns p-0 mt-2 mb-0"  key={book.id} >
                 <div className="column is-narrow p-0 m-2">
                     <Link to={`/book/${book.id}`}>    
@@ -92,7 +99,15 @@ import { chapters, comments, reviews } from "../../httpRequests/testData";
                     <div>
                       <div className="is-flex mt-1 is-align-items-center">
                           <i className="fas fa-star mr-1 is-size-7" style={{color:'orange'}}></i>
-                          <span className="subtitle is-size-6 pb-1">{book.averageScore}</span>
+                          <span className="subtitle is-size-6 pb-1">{
+                              (() => {
+                                const reviewData = reviews.filter(x => x.bookId === book.id);
+                                const sum = reviewData.reduce((total, review) => total + review.score, 0);
+                                const averageScore = reviewData.length ? sum / reviewData.length : 0;
+                                return averageScore; 
+                              })()
+                          }
+                          </span>
                       </div>
                       <div className="is-flex mt-1 is-align-items-center">
                           <i className="fas fa-pen mr-1 is-size-7"></i>

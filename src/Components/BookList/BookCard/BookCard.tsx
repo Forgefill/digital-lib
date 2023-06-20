@@ -2,18 +2,23 @@ import { Link } from "react-router-dom";
 import { BookInfoModel } from "../../../httpRequests/bookApi";
 import noImagePlaceholder from "./No-Image-Placeholder.png";
 import "bulma/css/bulma.min.css";
+import { Book, reviews } from "../../../httpRequests/testData";
 
 interface BookCardProps {
-  bookInfo: BookInfoModel;
+  bookInfo: Book;
 }
 
 const BookCard: React.FC<BookCardProps> = ({ bookInfo }) => {
+
+      const reviewData = reviews.filter(x => x.bookId === bookInfo.id);
+      const sum = reviewData.reduce((total, review) => total + review.score, 0);
+      const averageScore = reviewData.length ? sum / reviewData.length : 0;
 
 
   return (
     <div className="card">
       <Link to={`/book/${bookInfo.id}`}>
-        <figure className="image is-3by4" >
+        <figure className="image is-3by4">
           <img 
             src={bookInfo.imageUrl || noImagePlaceholder} 
             alt={bookInfo.imageUrl ? bookInfo.title : "No Image"} 
@@ -25,7 +30,7 @@ const BookCard: React.FC<BookCardProps> = ({ bookInfo }) => {
             <p className="title is-6">{bookInfo.title}</p>
           </div>
           <p className="subtitle is-size-6">
-            Average Score: {bookInfo.averageScore}
+            Avg Score: {averageScore}
           </p>
         </div>
       </Link>
